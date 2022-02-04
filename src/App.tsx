@@ -24,7 +24,7 @@ function App() {
           </Button>
         </div>
         <Sidebar isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
-        <div className="col-span-full md:col-span-8 px-2 py-3">
+        <div className="col-span-full md:col-span-8 lg:col-span-10 px-2 py-3">
           <Routes>
             <Route path="/" element={<Page1 />} />
             <Route path="/page2" element={<Page2 />} />
