@@ -8,7 +8,7 @@ export const setRouteAction = (route: string) => (dispatch: Dispatch) => {
 };
 
 export const getAllPosts = (route: string) => async (dispatch: Dispatch) => {
-  if (!route.includes("?") && !route.includes('_limit')) {
+  if (!route.includes("?") && !route.includes("_limit")) {
     route = `${route}?_limit=7`;
   } else {
     route = `${route}&_limit=7`;
