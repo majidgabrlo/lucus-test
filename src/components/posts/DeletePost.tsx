@@ -1,6 +1,6 @@
-import Button from './Button'
+import Button from '../Button'
 import React from 'react'
-import axios from '../axios/post.axios'
+import axios from '../../axios/post.axios'
 interface propsType{
     id:number
     closeModal:()=>void

@@ -1,27 +1,41 @@
-import { TextField } from "@mui/material";
 import React from "react";
-import useInput from "../hooks/useInput";
-import axios from "../axios/post.axios";
-
-interface propsType{
-    closeModal:()=>void
-    refreshData:()=>void
+import useInput from "../../hooks/useInput";
+import axios from "../../axios/post.axios";
+import { useEffect } from "react";
+interface propsType {
+  id: number;
+  closeModal: () => void;
+  refreshData: () => void;
 }
 
-function AddPost(props:propsType) {
-  const [title, resetTitle]:any = useInput("");
-  const [body, resetBody]:any = useInput("");
-  const [userId, resetUserId]:any = useInput(0);
-  const sendData =async () => {
-    const data=await axios.post("/posts",{title:title.value,body:body.value,userId:userId.value})
-    console.log("data",data);
-    resetBody()
-    resetTitle()
-    resetUserId()
-    
-    props.closeModal()
+function EditPost(props: propsType) {
+  const [title, resetTitle]: any = useInput("");
+  const [body, resetBody]: any = useInput("");
+  const [userId, resetUserId]: any = useInput(0);
+  const sendData = async () => {
+    const data = await axios.put(`/posts/${props.id}`, {
+      title: title.value,
+      body: body.value,
+      userId: userId.value,
+    });
+    resetBody();
+    resetTitle();
+    resetUserId();
+
+    props.closeModal();
     props.refreshData()
   };
+
+  useEffect(() => {
+    const getDefaultValues=async(id:number)=>{
+        const data=await axios.get(`/posts/${id}`)
+        resetTitle(data.data.title)
+        resetUserId(data.data.userId)
+        resetBody(data.data.body)
+    }
+
+    getDefaultValues(props.id)
+  }, [])
 
   return (
     <>
@@ -50,10 +64,10 @@ function AddPost(props:propsType) {
         type="button"
         onClick={sendData}
       >
-        Add
+        Edit
       </button>
     </>
   );
 }
 
-export default AddPost;
+export default EditPost;
