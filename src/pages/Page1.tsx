@@ -18,11 +18,13 @@ import { RootState } from "../store/store";
 import AddPost from "../components/AddPost";
 import DeletePost from "../components/DeletePost";
 import EditPost from "../components/EditPost";
+import useInput from "../hooks/useInput";
 
 function Page2() {
   const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState({ mode: "", id: 0 });
+  const [filterByUser, setFilterByUser]=useState();
   const dispatch = useAppDispatch();
   const { route, postsList } = useSelector((state: RootState) => state.post);
 
@@ -42,6 +44,14 @@ function Page2() {
     dispatch(setRouteAction(`?_page=${value}`));
   };
 
+  const userIdFilter = (userId: number) => {
+    if(!userId){
+        dispatch(getAllPosts(`?${route}`));
+        return
+    }
+    dispatch(getAllPosts(`?${route}userId=${userId}`));
+  };
+
   const openModal = (command: string, id?: number) => {
     setModalOpen(true);
     if (command == "add") {
@@ -57,26 +67,50 @@ function Page2() {
 
   const modalData = (command: string = "add", id?: number) => {
     if (command == "add") {
-      return <AddPost refreshData={getData} closeModal={() => setModalOpen(false)} />;
+      return (
+        <AddPost refreshData={getData} closeModal={() => setModalOpen(false)} />
+      );
     }
     if (command == "delete" && id) {
-      return <DeletePost refreshData={getData} closeModal={() => setModalOpen(false)} id={id} />;
+      return (
+        <DeletePost
+          refreshData={getData}
+          closeModal={() => setModalOpen(false)}
+          id={id}
+        />
+      );
     }
     if (command == "edit" && id) {
-      return <EditPost refreshData={getData} closeModal={() => setModalOpen(false)} id={id} />;
+      return (
+        <EditPost
+          refreshData={getData}
+          closeModal={() => setModalOpen(false)}
+          id={id}
+        />
+      );
     }
   };
 
   return (
-    <div>
-      <Button
-        className="bg-green-800 text-white px-2 py-1 rounded mb-3"
-        onClick={() => openModal("add")}
-      >
-        Add
-      </Button>
+    <div className="flex flex-col" style={{maxHeight:"95vh"}}>
+      <div className="flex gap-x-3 mb-1">
+        <Button
+          className="bg-green-800 text-white px-2 py-1 rounded"
+          onClick={() => openModal("add")}
+        >
+          Add
+        </Button>
+
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          value={filterByUser}
+          onChange={(e)=>userIdFilter(Number(e.target.value))}
+          placeholder="Title"
+        />
+      </div>
       <TableContainer
-        style={{ maxHeight: "90vh" }}
+        // style={{ maxHeight: "85vh" }}
         className="overflow-y-auto mb-2 w-full"
         component={Paper}
       >
@@ -128,8 +162,8 @@ function Page2() {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Pagination onChange={handleChange} count={Math.floor(100 / 7)} />
+                
+      <Pagination className="" onChange={handleChange} count={Math.floor(100 / 7)} />
       <Modal isOpen={modalOpen} closeModal={() => setModalOpen(false)}>
         <div>{modalData(modalMode.mode, modalMode.id)}</div>
       </Modal>
