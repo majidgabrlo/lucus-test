@@ -46,7 +46,7 @@ export default function BasicCard(props: propsTypes) {
       <CardContent>
         <div className="mb-1">Title</div>
         <textarea
-          className={`mb-5 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border focus:shadow focus:shadow-outline ${
+          className={`mb-5 overflow-y-hidden appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border focus:shadow focus:shadow-outline ${
             done ? "line-through" : ""
           }`}
           value={props.title}
@@ -57,7 +57,7 @@ export default function BasicCard(props: propsTypes) {
 
         <div className="mb-1">Body</div>
         <textarea
-          className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border focus:shadow focus:shadow-outline ${
+          className={`appearance-none overflow-y-hidden rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border focus:shadow focus:shadow-outline ${
             done ? "line-through" : ""
           }`}
           disabled={done}

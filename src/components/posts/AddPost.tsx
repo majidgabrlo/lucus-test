@@ -14,7 +14,6 @@ function AddPost(props:propsType) {
   const [userId, resetUserId]:any = useInput(0);
   const sendData =async () => {
     const data=await axios.post("/posts",{title:title.value,body:body.value,userId:userId.value})
-    console.log("data",data);
     resetBody()
     resetTitle()
     resetUserId()

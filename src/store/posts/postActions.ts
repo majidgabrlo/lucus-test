@@ -14,8 +14,5 @@ export const getAllPosts = (route: string) => async (dispatch: Dispatch) => {
     route = `${route}&_limit=7`;
   }
   const posts = await axios.get(`/posts${route}`);
-
-  console.log("pp", posts);
-
   dispatch(setPosts(posts.data));
 };

@@ -36,7 +36,6 @@ function Page3() {
     setTodos([...temp]);
   };
 
-  console.log("dd", todos);
 
   return (
     <div>
