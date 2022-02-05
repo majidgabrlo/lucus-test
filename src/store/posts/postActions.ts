@@ -1,18 +1,25 @@
 import { Dispatch } from "@reduxjs/toolkit";
 
-import { setPosts, setRoute } from "./postSlice";
+import { setError, setPosts } from "./postSlice";
 import axios from "../../axios/post.axios";
 
-export const setRouteAction = (route: string) => (dispatch: Dispatch) => {
-  dispatch(setRoute(route));
-};
+interface routeType{
+  page:number
+  userId?:number
+}
 
-export const getAllPosts = (route: string) => async (dispatch: Dispatch) => {
-  if (!route.includes("?") && !route.includes("_limit")) {
-    route = `${route}?_limit=7`;
-  } else {
-    route = `${route}&_limit=7`;
+export const getAllPosts = (route: routeType) => async (dispatch: Dispatch) => {
+  dispatch(setError(""))
+  try {
+    const posts = await axios.get(`/posts`, {
+      params: {
+        _limit: 7,
+        _page:route.page,
+        userId:route.userId ? route.userId :null
+      },
+    });
+    dispatch(setPosts(posts.data));
+  } catch (error:any) {
+    dispatch(setError(error.message))
   }
-  const posts = await axios.get(`/posts${route}`);
-  dispatch(setPosts(posts.data));
 };

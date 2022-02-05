@@ -39,8 +39,8 @@ function Page3() {
 
   return (
     <div>
-      <div>Todo List</div>
-      <div className="flex gap-x-2">
+      <div className="font-bold text-2xl mb-2">Todo List</div>
+      <div className="flex gap-x-2 mb-2">
         <Button onClick={addTodo}>Add</Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">

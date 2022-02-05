@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {RootObject} from './imageType'
+import { RootObject } from "./imageType";
 
 interface initialStateInterFace {
-  route: string;
   imageList: RootObject[];
+  error: string;
 }
 
 const initialState: initialStateInterFace = {
-  route: "",
   imageList: [],
+  error: "",
 };
 
 export const postsSlice = createSlice({
@@ -18,12 +18,13 @@ export const postsSlice = createSlice({
     setImages: (state, action) => {
       state.imageList = action.payload;
     },
-    setRoute:(state,action)=>{
-        state.route=action.payload
-    }
+
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setImages,setRoute } = postsSlice.actions;
+export const { setImages, setError } = postsSlice.actions;
 
 export default postsSlice.reducer;

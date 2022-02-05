@@ -8,13 +8,13 @@ interface posts {
 }
 
 interface initialStateInterFace {
-  route: string;
   postsList: posts[];
+  error:string
 }
 
 const initialState: initialStateInterFace = {
-  route: "",
   postsList: [],
+  error:""
 };
 
 export const postsSlice = createSlice({
@@ -24,12 +24,12 @@ export const postsSlice = createSlice({
     setPosts: (state, action) => {
       state.postsList = action.payload;
     },
-    setRoute:(state,action)=>{
-        state.route=action.payload
+    setError:(state,action)=>{
+      state.error=action.payload
     }
   },
 });
 
-export const { setPosts,setRoute } = postsSlice.actions;
+export const { setPosts,setError } = postsSlice.actions;
 
 export default postsSlice.reducer;

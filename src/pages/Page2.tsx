@@ -5,11 +5,12 @@ import { getPictures as getPicturesAction } from "../store/pictures/picturesActi
 import { RootState } from "../store/store";
 import { ImageList, ImageListItem } from "@mui/material";
 import useDebounce from "../hooks/useDebouncer";
+import ShowError from "../components/ShowError";
 
 function Page2() {
   const [term, setTerm] = useState("");
   const debouncedTerm = useDebounce<string>(term, 2000);
-  const { imageList } = useSelector((state: RootState) => state.image);
+  const { imageList,error } = useSelector((state: RootState) => state.image);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -25,6 +26,9 @@ function Page2() {
     if (window.innerWidth < 800) return 2;
     return 4;
   };
+
+  if(error)return <ShowError onRetry={()=>getPictures(debouncedTerm)}>{error}</ShowError>
+
 
   return (
     <div

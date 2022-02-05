@@ -1,0 +1,7 @@
+.navbar--active__links.active div{
+    background-color: white;
+    color: green;
+    font-weight: bold;
+    margin-right: 10px;
+    border-radius: 0 10px 10px 0;
+}
